@@ -1,0 +1,102 @@
+[package]
+name = "global-network"
+version = "4.0.0-dev"
+description = "A fresh FRAME-based Substrate node, ready for hacking."
+authors = ["Asad Ali"]
+homepage = "https://substrate.io/"
+edition = "2021"
+license = "Unlicense"
+publish = false
+repository = "https://github.com/asadalisiyal/Global-Network"
+build = "build.rs"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[[bin]]
+name = "global-network"
+
+[dependencies]
+clap = { workspace = true, features = ["derive"] }
+libsecp256k1 = { workspace = true, features = [ "hmac" ] }
+sha3 = { workspace = true }
+array-bytes = "6.0.0"
+
+sc-cli = { workspace = true }
+sp-core = { workspace = true }
+sc-executor = { workspace = true }
+sc-service = { workspace = true }
+sc-telemetry = { workspace = true }
+sc-keystore = { workspace = true }
+sc-transaction-pool = { workspace = true }
+sc-transaction-pool-api = { workspace = true }
+sc-consensus-aura = { workspace = true }
+sp-consensus-aura = { workspace = true }
+sp-consensus = { workspace = true }
+sc-consensus = { workspace = true }
+sc-finality-grandpa = { workspace = true }
+sp-finality-grandpa = { workspace = true }
+sc-client-api = { workspace = true }
+sp-runtime = { workspace = true }
+sp-timestamp = { workspace = true }
+sp-inherents = { workspace = true }
+sp-keyring = { workspace = true }
+frame-system = { workspace = true }
+pallet-transaction-payment = { workspace = true }
+hex-literal = "0.4.1"
+futures = "0.3.25"
+
+
+# These dependencies are used for the node template's RPCs
+jsonrpsee = { version = "0.16", features = [ "macros", "server" ] }
+sc-rpc = { workspace = true }
+sp-api = { workspace = true }
+sc-rpc-api = { workspace = true }
+sp-blockchain = { workspace = true }
+sp-block-builder = { workspace = true }
+sc-basic-authorship = { workspace = true }
+substrate-frame-rpc-system = { workspace = true }
+pallet-transaction-payment-rpc = { workspace = true }
+
+# These dependencies are used for runtime benchmarking
+frame-benchmarking = { workspace = true }
+frame-benchmarking-cli = { workspace = true }
+
+# Local Dependencies
+global-network-runtime = { path = "../runtime" }
+
+# CLI-specific dependencies
+try-runtime-cli = { optional = true, workspace = true }
+
+# Evm dependencies
+fp-evm = { workspace = true }
+fp-rpc = { workspace = true }
+fp-storage = { workspace = true }
+fp-dynamic-fee = { workspace = true }
+fc-rpc = { workspace = true}
+fc-consensus = { workspace = true }
+fp-consensus = { workspace = true }
+fc-rpc-core = { workspace = true }
+fc-mapping-sync = { workspace = true }
+fc-db = { workspace = true }
+sc-network = { workspace = true }
+
+[build-dependencies]
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.37" }
+
+[features]
+default = []
+# Dependencies that are only required if runtime benchmarking should be build.
+runtime-benchmarks = [
+	"global-network-runtime/runtime-benchmarks",
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-benchmarking-cli/runtime-benchmarks",
+]
+# Enable features that allow the runtime to be tried and debugged. Name might be subject to change
+# in the near future.
+try-runtime = ["global-network-runtime/try-runtime", "try-runtime-cli"]
+
+[dependencies.pallet-im-online]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+branch = 'polkadot-v0.9.37'
