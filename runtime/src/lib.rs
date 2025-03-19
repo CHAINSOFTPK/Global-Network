@@ -234,7 +234,7 @@ parameter_types! {
 	pub const SS58Prefix: u8 = 42;
 	
 	// For FarmVentures chain ID - updated to 1204
-	pub const FarmChainId: u64 = 2023;
+	pub const FarmChainId: u64 = 1204;
 }
 
 // Function to determine which currency to use based on chain ID
@@ -464,7 +464,7 @@ impl pallet_evm::Config for Runtime {
 
 	type WeightPerGas = ();
 	type BlockHashMapping = EthereumBlockHashMapping<Self>;
-	type CallOrigin = EnsureAddressRoot<AccountId>;d
+	type CallOrigin = EnsureAddressRoot<AccountId>;
 	type WithdrawOrigin = EnsureAddressNever<AccountId>;
 
 	type AddressMapping = account::IntoAddressMapping;
@@ -473,7 +473,7 @@ impl pallet_evm::Config for Runtime {
 
 	type PrecompilesType = SubstratePrecompiles<Self>;
 	type PrecompilesValue = PrecompilesValue;
-	type ChainId = LeetChainId; // Use FarmChainId instead of LeetChainId
+	type ChainId = FarmChainId; // Use FarmChainId instead of LeetChainId
 	type BlockGasLimit = BlockGasLimit;
 	type Runner = pallet_evm::runner::stack::Runner<Self>;
 	type OnChargeTransaction = ();
