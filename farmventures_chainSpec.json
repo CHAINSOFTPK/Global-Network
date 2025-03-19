@@ -1,0 +1,15 @@
+{
+  "name": "FarmVentures Mainnet",
+  "id": "farmventures_mainnet",
+  "chainType": "Live",
+  "bootNodes": [],
+  "telemetryEndpoints": null,
+  "protocolId": "farmventures",
+  "properties": {
+    "tokenDecimals": 18,
+    "tokenSymbol": "FC"
+  },
+  "relay_chain": "farmventures",
+  "para_id": 1000,
+  "chainId": 1204
+}

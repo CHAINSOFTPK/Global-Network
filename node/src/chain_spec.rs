@@ -35,6 +35,12 @@ const BALTATHAR: &str = "0xF3c25Ea246B52a901b47CDAE1ecD3039246Ab31d";
 const CHARLETH: &str = "0xac0103172516afe69E9F3D3EB451cb6382b3A0EB";
 const DOROTHY: &str = "0x2651E1424Fa908982eBAA6aaCdf899E8783B028f";
 
+// FarmVentures wallet addresses
+pub const FARM_WALLET_1: &str = "0x310504DAf82ab4261fEaeef8eE31001c5cC22CBC";
+pub const FARM_WALLET_2: &str = "0x05cdB9629a19b150ec4420CEBc9550554eBbfCdc";
+pub const FARM_WALLET_3: &str = "0x33adfF1a7934EA3735bC29C36b62D5Bd307912Ef";
+pub const FARM_WALLET_4: &str = "0x6021A1Af4Ee4F1C333030f2BaC316446f9F085F0";
+
 pub fn public_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 
@@ -103,6 +109,13 @@ pub fn chainspec_properties() -> Properties {
 	let mut properties = Properties::new();
 	properties.insert("tokenDecimals".into(), 18.into());
 	properties.insert("tokenSymbol".into(), "GNF".into());
+	properties
+}
+
+pub fn farmventures_chainspec_properties() -> Properties {
+	let mut properties = Properties::new();
+	properties.insert("tokenDecimals".into(), 18.into());
+	properties.insert("tokenSymbol".into(), "FC".into());
 	properties
 }
 
@@ -214,6 +227,46 @@ pub fn testnet_config() -> Result<ChainSpec, String> {
 		Some(chainspec_properties()),
 		// Extensions
 		None,
+	))
+}
+
+pub fn farmventures_config() -> Result<ChainSpec, String> {
+	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
+
+	Ok(ChainSpec::from_genesis(
+		"FarmVentures Mainnet",
+		"farmventures_mainnet",
+		ChainType::Live,
+		move || {
+			farmventures_genesis(
+				wasm_binary,
+				// Initial PoA authorities
+				vec![
+					(
+						array_bytes::hex_n_into_unchecked(ALITH),
+						hex!["469af7baae9f43aa9eed5db7c13c25474d299093934dc0d112c31e26935d7f12"].unchecked_into(),
+						hex!["baabfa2e04240e1a0496181f09d2bf6301d270b4945afe3ccef88d3e3957096f"].unchecked_into(),
+						hex!["e1116133780d5e28afad4a8aa01aadb0c6a384f370ef553c25aebbf42c88e177"].unchecked_into(),					
+					),
+				],
+				// Sudo account - using ALITH for now
+				array_bytes::hex_n_into_unchecked(ALITH),
+				// Pre-funded accounts - FarmVentures wallets
+				vec![
+					array_bytes::hex2array_unchecked::<20>(FARM_WALLET_1).into(),
+					array_bytes::hex2array_unchecked::<20>(FARM_WALLET_2).into(),
+					array_bytes::hex2array_unchecked::<20>(FARM_WALLET_3).into(),
+					array_bytes::hex2array_unchecked::<20>(FARM_WALLET_4).into(),
+				],
+				true,
+			)
+		},
+		vec![],
+		None,
+		Some("farmventures"),
+		None,
+		None,
+		farmventures_chainspec_properties(),
 	))
 }
 
@@ -393,5 +446,75 @@ fn mainnet_genesis(
 
 		ethereum: Default::default(),
 		base_fee: Default::default(),
+	}
+}
+
+/// Genesis configuration for FarmVentures Mainnet
+fn farmventures_genesis(
+	wasm_binary: &[u8],
+	initial_authorities: Vec<(AccountId, AuraId, GrandpaId, ImOnlineId)>,
+	root_key: AccountId,
+	endowed_accounts: Vec<AccountId>,
+	_enable_println: bool,
+) -> GenesisConfig {
+	let num_endowed_accounts = endowed_accounts.len();
+	
+	// Define token amount - 1.25 billion tokens per wallet with 18 decimals (total 5 billion)
+	let farm_token = 1_250_000_000 * FC; // Using FC constant instead of raw value
+
+	GenesisConfig {
+		treasury: Default::default(),
+		system: SystemConfig {
+			// Add Wasm runtime to storage.
+			code: wasm_binary.to_vec(),
+		},
+		balances: BalancesConfig {
+			balances: endowed_accounts
+				.iter()
+				.cloned()
+				.map(|k| (k, farm_token)) // Each wallet gets 1.25 billion tokens
+				.collect(),
+		},
+		validator_set: ValidatorSetConfig {
+			initial_validators: initial_authorities.iter().map(|x| x.0.clone()).collect::<Vec<_>>(),
+		},
+		aura: AuraConfig {
+			authorities: vec![],	
+		},
+		grandpa: GrandpaConfig {
+			authorities: vec![],
+		},
+		sudo: SudoConfig {
+			// Assign network admin rights.
+			key: Some(root_key),
+		},
+		im_online: ImOnlineConfig { keys: vec![] },
+
+		democracy: DemocracyConfig::default(),
+		council: CouncilConfig::default(),
+		technical_committee: TechnicalCommitteeConfig {
+			members: endowed_accounts
+				.iter()
+				.take((num_endowed_accounts))
+				.cloned()
+				.collect(),
+			phantom: Default::default(),
+		},
+		transaction_payment: Default::default(),
+		evm: Default::default(),
+		ethereum: Default::default(),
+		base_fee: Default::default(),
+		session: SessionConfig {
+			keys: initial_authorities
+				.into_iter()
+				.map(|x| {
+					(
+						x.0.clone(), 
+						x.0.clone(), 
+						session_keys(x.1.clone(), x.2.clone(), x.3.clone())
+					)
+				})
+				.collect::<Vec<_>>(),
+		},
 	}
 }
