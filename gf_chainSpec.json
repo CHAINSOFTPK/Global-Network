@@ -12,7 +12,7 @@
   "protocolId": null,
   "properties": {
     "tokenDecimals": 18,
-    "tokenSymbol": "GNF"
+    "tokenSymbol": "FC"
   },
   "codeSubstitutes": {},
   "genesis": {

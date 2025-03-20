@@ -111,7 +111,7 @@ pub mod currency {
 	pub const GIGAWEI: Balance = 1_000_000_000;
 	pub const MICROSTOR: Balance = 1_000_000_000_000;
 	pub const MILLISTOR: Balance = 1_000_000_000_000_000;
-	pub const GNF: Balance = 1_000_000_000_000_000_000;
+	pub const FC: Balance = 1_000_000_000_000_000_000;
 	pub const KILOSTOR: Balance = 1_000_000_000_000_000_000_000;
 
 	pub const TRANSACTION_BYTE_FEE: Balance = 1 * GIGAWEI * SUPPLY_FACTOR;
@@ -165,8 +165,8 @@ impl validator_set::Config for Runtime {
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("global-network"),
-	impl_name: create_runtime_str!("global-network"),
+	spec_name: create_runtime_str!("FarmVenture "),
+	impl_name: create_runtime_str!("FarmVenture "),
 	authoring_version: 1,
 	// The version of the runtime specification. A full node will not attempt to use its native
 	//   runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
@@ -400,7 +400,7 @@ parameter_types! {
 
 
 parameter_types! {
-	pub const LeetChainId: u64 = 1013;
+	pub const LeetChainId: u64 = 1204;
 	pub BlockGasLimit: U256 = U256::from(NORMAL_DISPATCH_RATIO * WEIGHT_REF_TIME_PER_SECOND / WEIGHT_PER_GAS);
 	pub PrecompilesValue: SubstratePrecompiles<Runtime> = SubstratePrecompiles::<_>::new();
 }
@@ -588,7 +588,7 @@ parameter_types! {
 parameter_types! {
 
 	pub const ProposalBond: Permill = Permill::from_percent(5);
-	pub const ProposalBondMinimum: Balance = 1 * GNF;
+	pub const ProposalBondMinimum: Balance = 1 * FC;
 	pub const ImOnlineUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
 	pub const SpendPeriod: BlockNumber = 1 * DAYS;
 	pub const Burn: Permill = Permill::from_percent(50);
@@ -642,7 +642,7 @@ parameter_types! {
 	pub const LaunchPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
 	pub const VotingPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
 	pub const FastTrackVotingPeriod: BlockNumber = 3 * 24 * 60 * MINUTES;
-	pub const MinimumDeposit: Balance = 100 * GNF;
+	pub const MinimumDeposit: Balance = 100 * FC;
 	pub const EnactmentPeriod: BlockNumber = 30 * 24 * 60 * MINUTES;
 	pub const CooloffPeriod: BlockNumber = 28 * 24 * 60 * MINUTES;
 	pub const MaxProposals: u32 = 100;
@@ -781,7 +781,7 @@ impl pallet_scheduler::Config for Runtime {
 
 parameter_types! {
 	pub const PreimageMaxSize: u32 = 4096 * 1024;
-	pub const PreimageBaseDeposit: Balance = 1 * GNF;
+	pub const PreimageBaseDeposit: Balance = 1 * FC;
 	// One cent: $10,000 / MB
 	pub const PreimageByteDeposit: Balance = 1 * MILLISTOR;
 }

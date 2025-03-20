@@ -2703,7 +2703,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d2fabcfbdc87f4758337ca535fb41a6d701b65693ce38287d856d1674551ec9b"
 
 [[package]]
-name = "global-network"
+name = "FarmVenture "
 version = "4.0.0-dev"
 dependencies = [
  "array-bytes 6.0.0",
@@ -2722,7 +2722,7 @@ dependencies = [
  "frame-benchmarking-cli",
  "frame-system",
  "futures",
- "global-network-runtime",
+ "FarmVenture -runtime",
  "hex-literal",
  "jsonrpsee",
  "libsecp256k1",
@@ -2762,7 +2762,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "global-network-runtime"
+name = "FarmVenture -runtime"
 version = "4.0.0-dev"
 dependencies = [
  "fp-evm",

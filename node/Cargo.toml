@@ -1,5 +1,5 @@
 [package]
-name = "global-network"
+name = "FarmVenture "
 version = "4.0.0-dev"
 description = "A fresh FRAME-based Substrate node, ready for hacking."
 authors = ["Asad Ali"]
@@ -7,14 +7,14 @@ homepage = "https://substrate.io/"
 edition = "2021"
 license = "Unlicense"
 publish = false
-repository = "https://github.com/asadalisiyal/Global-Network"
+repository = "https://github.com/asadalisiyal/FarmVenture "
 build = "build.rs"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = "global-network"
+name = "FarmVenture "
 
 [dependencies]
 clap = { workspace = true, features = ["derive"] }
@@ -63,7 +63,7 @@ frame-benchmarking = { workspace = true }
 frame-benchmarking-cli = { workspace = true }
 
 # Local Dependencies
-global-network-runtime = { path = "../runtime" }
+FarmVenture -runtime = { path = "../runtime" }
 
 # CLI-specific dependencies
 try-runtime-cli = { optional = true, workspace = true }
@@ -88,13 +88,13 @@ substrate-build-script-utils = { git = "https://github.com/paritytech/substrate.
 default = []
 # Dependencies that are only required if runtime benchmarking should be build.
 runtime-benchmarks = [
-	"global-network-runtime/runtime-benchmarks",
+	"FarmVenture -runtime/runtime-benchmarks",
 	"frame-benchmarking/runtime-benchmarks",
 	"frame-benchmarking-cli/runtime-benchmarks",
 ]
 # Enable features that allow the runtime to be tried and debugged. Name might be subject to change
 # in the near future.
-try-runtime = ["global-network-runtime/try-runtime", "try-runtime-cli"]
+try-runtime = ["FarmVenture -runtime/try-runtime", "try-runtime-cli"]
 
 [dependencies.pallet-im-online]
 default-features = false
