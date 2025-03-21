@@ -58,6 +58,14 @@ cargo build --release
 > ```
 > 
 > This will fix errors in RocksDB and other C++ dependencies that use fixed-width integer types.
+>
+> To generate a blockchain specification file:
+>
+> ```bash
+> ./target/release/global-network build-spec --chain live > everyoneSpec.json
+> ```
+>
+> This command generates a chain specification that can be shared with other network participants.
 
 ### Embedded Docs
 
