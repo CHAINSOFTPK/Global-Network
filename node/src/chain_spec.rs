@@ -30,16 +30,16 @@ fn get_from_secret<TPublic: Public>(seed: &str) -> <TPublic::Pair as Pair>::Publ
 		.public()
 }
 
-const ALITH: &str = "0x2FBAC9dE90e988fB2014FC8Aa08cf452e5E5E515";
-const BALTATHAR: &str = "0xF3c25Ea246B52a901b47CDAE1ecD3039246Ab31d";
-const CHARLETH: &str = "0xac0103172516afe69E9F3D3EB451cb6382b3A0EB";
-const DOROTHY: &str = "0x2651E1424Fa908982eBAA6aaCdf899E8783B028f";
+const ALITH: &str = "0x310504DAf82ab4261fEaeef8eE31001c5cC22CBC";
+const BALTATHAR: &str = "0x05cdB9629a19b150ec4420CEBc9550554eBbfCdc";
+const CHARLETH: &str = "0x33adfF1a7934EA3735bC29C36b62D5Bd307912Ef";
+const DOROTHY: &str = "0x6021A1Af4Ee4F1C333030f2BaC316446f9F085F0";
 
 pub fn public_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 
 	Ok(ChainSpec::from_genesis(
-		"Global Foundation Mainnet",
+		"FarmVenture Mainnet",
 		"public_live",
 		ChainType::Live,
 		move || {
@@ -102,7 +102,7 @@ fn session_keys(aura: AuraId, grandpa: GrandpaId, im_online: ImOnlineId) -> Sess
 pub fn chainspec_properties() -> Properties {
 	let mut properties = Properties::new();
 	properties.insert("tokenDecimals".into(), 18.into());
-	properties.insert("tokenSymbol".into(), "GNF".into());
+	properties.insert("tokenSymbol".into(), "FC".into());
 	properties
 }
 
@@ -155,9 +155,9 @@ pub fn testnet_config() -> Result<ChainSpec, String> {
 
 	Ok(ChainSpec::from_genesis(
 		// Name
-		"GlobalFoundation Testnet",
+		"FarmVenture Testnet",
 		// ID
-		"GlobalFoundation",
+		"FarmVenture",
 		ChainType::Local,
 		move || {
 			testnet_genesis(
@@ -236,16 +236,17 @@ fn testnet_genesis(
 				.iter()
 				.cloned()
 				.map(|k| {
+					// Equal distribution of 1.25B tokens each (5B total)
 					if k == array_bytes::hex_n_into_unchecked(BALTATHAR) {
-						(k.clone(), 1_755_000_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else if k == array_bytes::hex_n_into_unchecked(CHARLETH) {
-						(k.clone(), 66_000_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else if k == array_bytes::hex_n_into_unchecked(DOROTHY) {
-						(k.clone(), 194_999_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else if k == array_bytes::hex_n_into_unchecked(ALITH) {
-						(k.clone(), 1000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else {
-						(k.clone(), 0 * GNF)
+						(k.clone(), 0 * FC)
 					}
 				})
 				.collect(),
@@ -331,17 +332,17 @@ fn mainnet_genesis(
 				.iter()
 				.cloned()
 				.map(|k| {
-					// if k == AccountId::from("0x90E79DAc498b35096d4d86CEa4f2c3681b40F5C7"). {
+					// Equal distribution of 1.25B tokens each (5B total)
 					if k == array_bytes::hex_n_into_unchecked(BALTATHAR) {
-						(k.clone(), 24_750_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else if k == array_bytes::hex_n_into_unchecked(CHARLETH) {
-						(k.clone(), 24_750_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else if k == array_bytes::hex_n_into_unchecked(DOROTHY) {
-						(k.clone(), 24_750_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else if k == array_bytes::hex_n_into_unchecked(ALITH) {
-						(k.clone(), 24_750_000 * GNF)
+						(k.clone(), 1_250_000_000 * FC)
 					} else {
-						(k.clone(), 0 * GNF)
+						(k.clone(), 0 * FC)
 					}
 				})
 				.collect(),

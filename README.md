@@ -49,6 +49,16 @@ without launching it:
 cargo build --release
 ```
 
+> **IMPORTANT NOTE:**  
+> If you encounter C++ build errors related to missing integer types (uint8_t, uint16_t, uint32_t, etc.), 
+> you need to include the cstdint header in the compilation. Run the build with:
+> 
+> ```bash
+> CXXFLAGS="-include cstdint" cargo build --release
+> ```
+> 
+> This will fix errors in RocksDB and other C++ dependencies that use fixed-width integer types.
+
 ### Embedded Docs
 
 Once the project has been built, the following command can be used to explore all parameters and
