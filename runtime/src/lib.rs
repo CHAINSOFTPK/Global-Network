@@ -400,7 +400,7 @@ parameter_types! {
 
 
 parameter_types! {
-	pub const LeetChainId: u64 = 1204;
+	pub const LeetChainId: u64 = 2237;
 	pub BlockGasLimit: U256 = U256::from(NORMAL_DISPATCH_RATIO * WEIGHT_REF_TIME_PER_SECOND / WEIGHT_PER_GAS);
 	pub PrecompilesValue: SubstratePrecompiles<Runtime> = SubstratePrecompiles::<_>::new();
 }
